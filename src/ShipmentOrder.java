@@ -1,18 +1,17 @@
 public abstract class ShipmentOrder implements SummaryPrintable {
-    public int orderNumber;
-    public String customerName;
-    public double distanceKm;
-    public double baseFee;
-    public boolean insured;
-    public double lastCalculatedPrice;
+    protected String orderNumber;
+    protected String customerName;
+    protected double distanceKm;
+    protected double baseFee;
+    protected boolean insured;
+    protected double lastCalculatedPrice;
 
-    public ShipmentOrder(int orderNumber, String customerName, double distanceKm, double baseFee, boolean insured, double lastCalculatedPrice) {
+    public ShipmentOrder(String orderNumber, String customerName, double distanceKm, double baseFee, boolean insured) {
         this.orderNumber = orderNumber;
         this.customerName = customerName;
         this.distanceKm = distanceKm;
         this.baseFee = baseFee;
         this.insured = insured;
-        this.lastCalculatedPrice = lastCalculatedPrice;
     }
 
     public final void processOrder() {
@@ -29,7 +28,15 @@ public abstract class ShipmentOrder implements SummaryPrintable {
     }
 
     private void validateOrder(){
-
+        if (orderNumber == null || orderNumber.isBlank()) {
+            throw new IllegalArgumentException("Order number cannot be blank");
+        }
+        if (customerName == null || customerName.isBlank()) {
+            throw new IllegalArgumentException("Customer name cannot be blank");
+        }
+        if (distanceKm <= 0){
+            throw new IllegalArgumentException("Distance km must be greater than 0");
+        }
     }
 
     protected void validateSpecificRules(){
@@ -61,11 +68,11 @@ public abstract class ShipmentOrder implements SummaryPrintable {
 
     // gettery i settery
 
-    public int getOrderNumber() {
+    public String getOrderNumber() {
         return orderNumber;
     }
 
-    public void setOrderNumber(int orderNumber) {
+    public void setOrderNumber(String orderNumber) {
         this.orderNumber = orderNumber;
     }
 
